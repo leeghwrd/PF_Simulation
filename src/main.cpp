@@ -1,16 +1,16 @@
-#include <iostream>
 #include <SDL2/SDL.h>
 
+#include <iostream>
+
 int main() {
-    
-    if(SDL_Init(SDL_INIT_VIDEO) < 0) {
-        std::cout << "SDL init failed!" << std::endl;
-        return 1;
-    }
+  if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+    std::cout << "SDL init failed!" << std::endl;
+    return 1;
+  }
 
-    std::cout << "SDL init suceeded!" << std::endl;
+  std::cout << "SDL init suceeded!" << std::endl;
 
-    SDL_Quit();
-    
-    return 0;
+  SDL_Quit();
+
+  return 0;
 }
