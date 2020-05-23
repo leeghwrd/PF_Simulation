@@ -15,7 +15,19 @@ int main() {
 
   while (!quit) {
     // Update particles
-    // Draw particles
+    
+    // draw particles
+    for (int x = 0; x < lgh::Screen::SCREEN_WIDTH; x++) {
+      for (int y = 0; y < lgh::Screen::SCREEN_HEIGHT; y++) {
+        screen.setPixel(x, y, 128, 0, 255);
+      }
+    }
+
+    screen.setPixel(400, 300, 255, 255, 255);
+
+    // draw screen
+    screen.update();
+
     // Check for messages/events
     if (screen.processEvents() == false) {
       break;
