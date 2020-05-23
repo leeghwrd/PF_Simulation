@@ -22,6 +22,21 @@ int main() {
     return 2;
   }
 
+  bool quit = false;
+
+  SDL_Event event;
+
+  while (!quit) {
+    // Update particles
+    // Draw particles
+    // Check for messages/events
+    while (SDL_PollEvent(&event)) {
+      if (event.type == SDL_QUIT) {
+        quit = true;
+      }
+    }
+  }
+
   SDL_DestroyWindow(window);
   SDL_Quit();
 
