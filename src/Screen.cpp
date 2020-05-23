@@ -48,7 +48,7 @@ bool Screen::init() {
   buffer = new Uint32[SCREEN_WIDTH * SCREEN_HEIGHT];
 
   // set all pixels to black using hexadecimal value 0xFF
-  //memset(buffer, 0, SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(Uint32));
+  memset(buffer, 0, SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(Uint32));
 
   return true;
 }
