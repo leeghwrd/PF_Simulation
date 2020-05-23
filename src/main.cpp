@@ -51,8 +51,13 @@ int main() {
   // allocate memory, every pixel requires 32bits
   Uint32 *buffer = new Uint32[SCREEN_WIDTH * SCREEN_HEIGHT];
 
-  // set all pixels to white using hexadecimal value 0xFF
-  memset(buffer, 0xFF, SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(Uint32));
+  // set all pixels to black using hexadecimal value 0xFF
+  memset(buffer, 0, SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(Uint32));
+
+  // set RGBA values - currently green
+  for (int i = 0; i < SCREEN_WIDTH * SCREEN_HEIGHT; i++) {
+    buffer[i] = 0x00FF80FF;
+  }
 
   // setup texture and renderer
   SDL_UpdateTexture(texture, NULL, buffer, SCREEN_WIDTH * sizeof(Uint32));
