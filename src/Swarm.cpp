@@ -2,7 +2,7 @@
 
 namespace lgh {
 
-Swarm::Swarm() {
+Swarm::Swarm(): lastTime(0) {
   particles = new Particle[NPARTICLES];
 }
 
@@ -14,10 +14,16 @@ Particle *Swarm::getParticles() {
   return particles;
 }
 
-void Swarm::update() {
+void Swarm::update(int elapsed) {
+  
+  int interval = elapsed - lastTime;
+
   for (int i = 0; i < Swarm::NPARTICLES; i++) {
-    particles[i].update();    
+    particles[i].update(interval);    
   }
+
+  // time since program started running
+  lastTime = elapsed;
 }
 
 } // namespace lgh

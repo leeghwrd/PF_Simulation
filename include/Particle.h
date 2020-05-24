@@ -13,7 +13,7 @@ private:
 public:
   Particle();
   ~Particle();
-  void update();
+  void update(int interval);
 
   // getter / setters
   void setX(double x);

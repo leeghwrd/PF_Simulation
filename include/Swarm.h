@@ -8,11 +8,12 @@ namespace lgh {
 class Swarm {
 private:
   Particle *particles;
+  int lastTime;
 
 public:
   Swarm();
   ~Swarm();
-  void update();
+  void update(int elapsed);
   const static int NPARTICLES = 1000;
   Particle *getParticles();
 };
