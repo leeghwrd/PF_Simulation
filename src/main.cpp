@@ -39,7 +39,7 @@ int main() {
     for (int i = 0; i < lgh::Swarm::NPARTICLES; i++) {
       lgh::Particle particle = particles[i];
       int x = (particle.getX() + 1) * lgh::Screen::SCREEN_WIDTH / 2;
-      int y = (particle.getY() + 1) * lgh::Screen::SCREEN_HEIGHT / 2;
+      int y = particle.getY() * lgh::Screen::SCREEN_WIDTH / 2 + lgh::Screen::SCREEN_HEIGHT / 2;
 
     screen.setPixel(x, y, red, green, blue);
     

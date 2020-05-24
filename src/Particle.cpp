@@ -1,15 +1,13 @@
 #include "Particle.h"
 
 #include <cstdlib>
+#include <cmath>
 
 namespace lgh {
 
-Particle::Particle() {
-  x = ((2.0 * std::rand()) / RAND_MAX) - 1;
-  y = ((2.0 * std::rand()) / RAND_MAX) - 1;
-  
-  xSpeed = 0.001 * (((2.0 * rand()) / RAND_MAX) - 1);
-  ySpeed = 0.001 * (((2.0 * rand()) / RAND_MAX) - 1);
+Particle::Particle(): x(0), y(0) {
+  direction = (2 * M_PI * rand()) / RAND_MAX;
+  speed = (0.001 * rand()) / RAND_MAX;
 }
 
 Particle::~Particle() {
@@ -17,17 +15,11 @@ Particle::~Particle() {
 }
 
 void Particle::update() {
+  double xspeed = speed * std::cos(direction);
+  double yspeed = speed * std::sin(direction);
 
-  x += xSpeed;
-  y += ySpeed;
-
-  if (x < -1.0 || x >= 1.0) {
-    xSpeed = -xSpeed;
-  }
-
-   if (y < -1.0 || y >= 1.0) {
-    ySpeed = -ySpeed;
-  }
+  x += xspeed;
+  y += yspeed;
 }
 
 void Particle::setX(double x) { x = x; }

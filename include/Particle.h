@@ -7,8 +7,8 @@ class Particle {
 private:
   double x;
   double y;
-  double xSpeed;
-  double ySpeed;
+  double speed;
+  double direction;
 
 public:
   Particle();
