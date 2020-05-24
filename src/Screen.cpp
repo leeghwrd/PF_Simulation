@@ -104,4 +104,9 @@ void Screen::close() {
   SDL_Quit();
 }
 
+
+void Screen::clear() {
+  memset(buffer, 0, SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(Uint32));
+}
+
 }  // namespace lgh
