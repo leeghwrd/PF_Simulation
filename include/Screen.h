@@ -16,7 +16,8 @@ private:
   SDL_Texture *texture;
   SDL_Event event;
   
-  Uint32 *buffer;
+  Uint32 *buffer1;
+  Uint32 *buffer2;
 
 public:
   Screen();
@@ -27,7 +28,7 @@ public:
   void setPixel(int x, int y, Uint8 red, Uint8 green, Uint8 blue);
   bool processEvents();
   void close();
-  void clear();
+  void boxBlur();
 
 };
 

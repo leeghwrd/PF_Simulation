@@ -3,7 +3,7 @@
 namespace lgh {
 
 Screen::Screen()
-    : window(NULL), renderer(NULL), texture(NULL), buffer(NULL) {}
+    : window(NULL), renderer(NULL), texture(NULL), buffer1(NULL), buffer2(NULL) {}
 
 Screen::~Screen() {}
 
@@ -45,10 +45,12 @@ bool Screen::init() {
   }
 
   // allocate memory, every pixel requires 32bits
-  buffer = new Uint32[SCREEN_WIDTH * SCREEN_HEIGHT];
+  buffer1 = new Uint32[SCREEN_WIDTH * SCREEN_HEIGHT];
+  buffer2 = new Uint32[SCREEN_WIDTH * SCREEN_HEIGHT];
 
   // set all pixels to black using hexadecimal value 0xFF
-  memset(buffer, 0, SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(Uint32));
+  memset(buffer1, 0, SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(Uint32));
+  memset(buffer2, 0, SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(Uint32));
 
   return true;
 }
@@ -70,13 +72,13 @@ void Screen::setPixel(int x, int y, Uint8 red, Uint8 green, Uint8 blue) {
   color <<= 8;
   color += 0xFF;
   
-  // set buffer with pixels
-  buffer[(y * SCREEN_WIDTH) + x] = color;
+  // set buffer1 with pixels
+  buffer1[(y * SCREEN_WIDTH) + x] = color;
 }
 
 void Screen::update() {
   // update texture and renderer
-  SDL_UpdateTexture(texture, NULL, buffer, SCREEN_WIDTH * sizeof(Uint32));
+  SDL_UpdateTexture(texture, NULL, buffer1, SCREEN_WIDTH * sizeof(Uint32));
   SDL_RenderClear(renderer);
   SDL_RenderCopy(renderer, texture, NULL, NULL);
   SDL_RenderPresent(renderer);
@@ -94,8 +96,9 @@ bool Screen::processEvents() {
 }
 
 void Screen::close() {
-  // free buffer allocated memory
-  delete[] buffer;
+  // free buffer1 allocated memory
+  delete[] buffer1;
+  delete[] buffer2;
 
   // destroy SDL resources and quit
   SDL_DestroyTexture(texture);
@@ -104,9 +107,47 @@ void Screen::close() {
   SDL_Quit();
 }
 
+void Screen::boxBlur() {
 
-void Screen::clear() {
-  memset(buffer, 0, SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(Uint32));
+  Uint32 *temp = buffer1;
+
+  buffer1 = buffer2;
+  buffer2 = temp;
+
+  for (int y = 0; y < SCREEN_HEIGHT; y++) {
+    for (int x = 0; x < SCREEN_WIDTH; x++) {
+      
+      int redTotal = 0;
+      int greenTotal = 0;
+      int blueTotal = 0;
+
+      for (int row = -1; row <= 1; row++) {
+        for (int col = -1; col <= 1; col++) {
+          int currentX = x + col;
+          int currentY = y + row;
+
+          if (currentX >= 0 && currentX < SCREEN_WIDTH && currentY >= 0 && currentY < SCREEN_HEIGHT) {
+            Uint32 color = buffer2[currentY * SCREEN_WIDTH + currentX];
+
+            // shift bits
+            Uint8 red = color >> 24;
+            Uint8 green = color >> 16;
+            Uint8 blue = color >> 8;
+
+            redTotal += red;
+            greenTotal += green;
+            blueTotal += blue;
+          }             
+        }
+      }
+
+      Uint8 red = redTotal / 9;
+      Uint8 green = greenTotal / 9;
+      Uint8 blue = blueTotal / 9;
+
+      setPixel(x, y, red ,green, blue);
+    }
+  }
 }
 
 }  // namespace lgh
