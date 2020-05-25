@@ -37,7 +37,7 @@ bool Screen::init() {
   }
 
   // check if texture creation is success
-  if (renderer == NULL) {
+  if (texture == NULL) {
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
