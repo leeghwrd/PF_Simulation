@@ -13,11 +13,6 @@ int main() {
   std::srand(time(NULL));
 
   lgh::Screen screen;
-
-  if (screen.init() == false) {
-    std::cout << "Error initializing SDL." << std::endl;
-  }
-
   lgh::Swarm swarm;
 
   while (true) {
@@ -55,8 +50,6 @@ int main() {
       break;
     }
   }
-
-  screen.close();
 
   return 0;
 }

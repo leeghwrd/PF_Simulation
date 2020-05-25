@@ -3,22 +3,21 @@
 namespace lgh {
 
 Screen::Screen()
-    : window(NULL), renderer(NULL), texture(NULL), buffer1(NULL), buffer2(NULL) {}
-
-Screen::~Screen() {}
-
-bool Screen::init() {
+    : window(nullptr),
+      renderer(nullptr),
+      texture(nullptr),
+      buffer1(nullptr),
+      buffer2(nullptr) {
+        
   if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-    return false;
   }
 
   window = SDL_CreateWindow("Particle Fire Simulation", SDL_WINDOWPOS_UNDEFINED,
                             SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH,
                             SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 
-  if (window == NULL) {
+  if (window == nullptr) {
     SDL_Quit();
-    return false;
   }
 
   // create renderer
@@ -30,18 +29,16 @@ bool Screen::init() {
                         SDL_TEXTUREACCESS_STATIC, SCREEN_WIDTH, SCREEN_HEIGHT);
 
   // check if renderer creation is success
-  if (renderer == NULL) {
+  if (renderer == nullptr) {
     SDL_DestroyWindow(window);
     SDL_Quit();
-    return false;
   }
 
   // check if texture creation is success
-  if (texture == NULL) {
+  if (texture == nullptr) {
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
-    return false;
   }
 
   // allocate memory, every pixel requires 32bits
@@ -51,8 +48,18 @@ bool Screen::init() {
   // set all pixels to black using hexadecimal value 0xFF
   memset(buffer1, 0, SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(Uint32));
   memset(buffer2, 0, SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(Uint32));
+}
 
-  return true;
+Screen::~Screen() {
+  // free buffer1 and buffer2 allocated memory
+  delete[] buffer1;
+  delete[] buffer2;
+
+  // destroy SDL resources and quit
+  SDL_DestroyTexture(texture);
+  SDL_DestroyRenderer(renderer);
+  SDL_DestroyWindow(window);
+  SDL_Quit();
 }
 
 void Screen::setPixel(int x, int y, Uint8 red, Uint8 green, Uint8 blue) {
@@ -62,7 +69,7 @@ void Screen::setPixel(int x, int y, Uint8 red, Uint8 green, Uint8 blue) {
   }
 
   Uint32 color = 0;
-  
+
   // bit shifting
   color += red;
   color <<= 8;
@@ -71,7 +78,7 @@ void Screen::setPixel(int x, int y, Uint8 red, Uint8 green, Uint8 blue) {
   color += blue;
   color <<= 8;
   color += 0xFF;
-  
+
   // set buffer1 with pixels
   buffer1[(y * SCREEN_WIDTH) + x] = color;
 }
@@ -82,7 +89,6 @@ void Screen::update() {
   SDL_RenderClear(renderer);
   SDL_RenderCopy(renderer, texture, NULL, NULL);
   SDL_RenderPresent(renderer);
-
 }
 
 bool Screen::processEvents() {
@@ -95,20 +101,7 @@ bool Screen::processEvents() {
   return true;
 }
 
-void Screen::close() {
-  // free buffer1 allocated memory
-  delete[] buffer1;
-  delete[] buffer2;
-
-  // destroy SDL resources and quit
-  SDL_DestroyTexture(texture);
-  SDL_DestroyRenderer(renderer);
-  SDL_DestroyWindow(window);
-  SDL_Quit();
-}
-
 void Screen::boxBlur() {
-
   Uint32 *temp = buffer1;
 
   buffer1 = buffer2;
@@ -116,7 +109,6 @@ void Screen::boxBlur() {
 
   for (int y = 0; y < SCREEN_HEIGHT; y++) {
     for (int x = 0; x < SCREEN_WIDTH; x++) {
-      
       int redTotal = 0;
       int greenTotal = 0;
       int blueTotal = 0;
@@ -126,7 +118,8 @@ void Screen::boxBlur() {
           int currentX = x + col;
           int currentY = y + row;
 
-          if (currentX >= 0 && currentX < SCREEN_WIDTH && currentY >= 0 && currentY < SCREEN_HEIGHT) {
+          if (currentX >= 0 && currentX < SCREEN_WIDTH && currentY >= 0 &&
+              currentY < SCREEN_HEIGHT) {
             Uint32 color = buffer2[currentY * SCREEN_WIDTH + currentX];
 
             // shift bits
@@ -137,7 +130,7 @@ void Screen::boxBlur() {
             redTotal += red;
             greenTotal += green;
             blueTotal += blue;
-          }             
+          }
         }
       }
 
@@ -145,7 +138,7 @@ void Screen::boxBlur() {
       Uint8 green = greenTotal / 9;
       Uint8 blue = blueTotal / 9;
 
-      setPixel(x, y, red ,green, blue);
+      setPixel(x, y, red, green, blue);
     }
   }
 }
