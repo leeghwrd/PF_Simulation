@@ -9,6 +9,7 @@ private:
   double y;
   double speed;
   double direction;
+  void init();
 
 public:
   Particle();
