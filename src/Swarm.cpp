@@ -3,9 +3,8 @@
 
 namespace lgh {
 
-Swarm::Swarm(): lastTime(0) {
+Swarm::Swarm(): lastTime(0), particles(new Particle[NPARTICLES]) {
   std::cout << "Allocating memory for particles" << std::endl;
-  particles = new Particle[NPARTICLES];
 }
 
 Swarm::~Swarm() {
