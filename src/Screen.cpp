@@ -22,7 +22,7 @@ Screen::Screen()
   }
 
   // create renderer
-  renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_PRESENTVSYNC);
+  renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_SOFTWARE);
 
   // create texture
   texture =
