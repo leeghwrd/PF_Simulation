@@ -1,4 +1,5 @@
 #include "Screen.h"
+#include <iostream>
 
 namespace lgh {
 
@@ -41,6 +42,8 @@ Screen::Screen()
     SDL_Quit();
   }
 
+  std::cout << "Allocating memory for buffer1 and buffer2" << std::endl;
+
   // allocate memory, every pixel requires 32bits
   buffer1 = new Uint32[SCREEN_WIDTH * SCREEN_HEIGHT];
   buffer2 = new Uint32[SCREEN_WIDTH * SCREEN_HEIGHT];
@@ -52,6 +55,8 @@ Screen::Screen()
 
 Screen::~Screen() {
   // free buffer1 and buffer2 allocated memory
+  std::cout << "Deallocating memory for buffer1 and buffer2" << std::endl;
+
   delete[] buffer1;
   delete[] buffer2;
 

@@ -1,12 +1,15 @@
 #include "Swarm.h"
+#include <iostream>
 
 namespace lgh {
 
 Swarm::Swarm(): lastTime(0) {
+  std::cout << "Allocating memory for particles" << std::endl;
   particles = new Particle[NPARTICLES];
 }
 
 Swarm::~Swarm() {
+  std::cout << "Deallocating memory for particles" << std::endl;
   delete [] particles;
 }
 
