@@ -11,6 +11,8 @@ Screen::Screen()
       buffer2(nullptr) {
         
   if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+    std::cerr << "Failed to initialize SDL!" << std::endl;
+    std::cerr << "SDL_Error: " << SDL_GetError() << std::endl;
   }
 
   window = SDL_CreateWindow("Particle Fire Simulation", SDL_WINDOWPOS_UNDEFINED,
