@@ -5,53 +5,21 @@
 #include <ctime>
 #include <iostream>
 
-#include "Screen.h"
-#include "Swarm.h"
-#include "Input.h"
+#include "Simulator.h"
 
 int main() {
 
+  // Random seed generator for time
   std::srand(time(NULL));
 
-  lgh::Screen screen;
-  lgh::Swarm swarm;
+  // create instance of simulator
+  lgh::Simulator simulator;
+
+  // create instance of input
   lgh::Input input;
 
-  while (true) {
-    // Update particles
-
-    // draw particles
-
-    int elapsed = SDL_GetTicks();
-    
-    swarm.update(elapsed);
-
-    unsigned char red = (unsigned char)((1 + std::sin(elapsed * 0.0001)) * 128);
-    unsigned char green = (unsigned char)((1 + std::sin(elapsed * 0.0002)) * 128);
-    unsigned char blue = (unsigned char)((1 + std::sin(elapsed * 0.0003)) * 128);
-
-    lgh::Particle *particles = swarm.getParticles();
-
-    for (int i = 0; i < lgh::Swarm::NPARTICLES; i++) {
-      lgh::Particle particle = particles[i];
-      int x = (particle.getX() + 1) * lgh::Screen::SCREEN_WIDTH / 2;
-      int y = particle.getY() * lgh::Screen::SCREEN_WIDTH / 2 + lgh::Screen::SCREEN_HEIGHT / 2;
-
-      screen.setPixel(x, y, red, green, blue);
-    }
-
-    // box blur
-    screen.boxBlur();
-    
-
-    // draw screen
-    screen.update();
-
-    // Check for messages/events
-    if (input.processEvents() == false) {
-      break;
-    }
-  }
+  // execute simulator and poll for input
+  simulator.run(input);
 
   return 0;
 }
