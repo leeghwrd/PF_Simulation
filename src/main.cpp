@@ -9,7 +9,7 @@
 
 int main() {
 
-  // Random seed generator for time
+  // random seed generator for time
   std::srand(time(NULL));
 
   // create instance of simulator
@@ -18,7 +18,7 @@ int main() {
   // create instance of input
   lgh::Input input;
 
-  // execute simulator and poll for input
+  // run simulator and poll for input
   simulator.run(input);
 
   return 0;
