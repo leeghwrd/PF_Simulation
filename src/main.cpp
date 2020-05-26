@@ -7,6 +7,7 @@
 
 #include "Screen.h"
 #include "Swarm.h"
+#include "Input.h"
 
 int main() {
 
@@ -14,6 +15,7 @@ int main() {
 
   lgh::Screen screen;
   lgh::Swarm swarm;
+  lgh::Input input;
 
   while (true) {
     // Update particles
@@ -46,7 +48,7 @@ int main() {
     screen.update();
 
     // Check for messages/events
-    if (screen.processEvents() == false) {
+    if (input.processEvents() == false) {
       break;
     }
   }
