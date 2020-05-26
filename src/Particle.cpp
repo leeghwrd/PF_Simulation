@@ -23,7 +23,7 @@ void Particle::init() {
   speed *= speed;
 }
 
-void Particle::update(int interval) {
+void Particle::update(int &interval) {
 
   direction += interval * 0.0002;
 
