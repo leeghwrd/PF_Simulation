@@ -16,6 +16,7 @@ private:
   // private members instances for simulator
   Screen screen;
   Swarm swarm;
+  Input input;
 
 public:
   // constructor
@@ -26,7 +27,7 @@ public:
 
   // starts main simulation loop
   // argument input uses reference
-  void run(Input &input);
+  void run();
 
 };
 

@@ -1,4 +1,5 @@
 #include "Screen.h"
+
 #include <iostream>
 
 namespace lgh {
@@ -12,19 +13,18 @@ Screen::Screen()
       texture(nullptr),
       buffer1(nullptr),
       buffer2(nullptr) {
-  
   // error initialzing SDL
   if (SDL_Init(SDL_INIT_VIDEO) < 0) {
     std::cerr << "Failed to initialize SDL!" << std::endl;
     std::cerr << "SDL_Error: " << SDL_GetError() << std::endl;
   }
 
-  // create window with no specific window postion, usually opens at center of screen
-  // width and heiht values are 800x600, Set window title
+  // create window with no specific window postion, usually opens at center of
+  // screen width and heiht values are 800x600, Set window title
   window = SDL_CreateWindow("Particle Fire Simulation", SDL_WINDOWPOS_UNDEFINED,
                             SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH,
                             SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-  
+
   // quit program if window fails to intialize
   if (window == nullptr) {
     SDL_Quit();
@@ -92,7 +92,7 @@ void Screen::setPixel(int x, int y, Uint8 red, Uint8 green, Uint8 blue) {
   // bit shift color values
   // results in values that
   // like: 0xFF003400, 0x123456
-  
+
   // each color shifts 8 bits
   // until the final alpha value
   color += red;
@@ -119,7 +119,6 @@ void Screen::update() {
 // longer the pixel are on screen, more
 // blur affect is added to them
 void Screen::boxBlur() {
-
   // swap buffers so pixel info is in buffer2
   Uint32 *temp = buffer1;
 
@@ -132,7 +131,7 @@ void Screen::boxBlur() {
       int redTotal = 0;
       int greenTotal = 0;
       int blueTotal = 0;
-      
+
       // all pixels in entire row
       for (int row = -1; row <= 1; row++) {
         // all pixels in entire column

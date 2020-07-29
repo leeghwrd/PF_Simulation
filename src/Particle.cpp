@@ -1,15 +1,14 @@
 #include "Particle.h"
 
-#include <cstdlib>
 #include <cmath>
+#include <cstdlib>
 
 namespace lgh {
 
 // Particle Implementation
 
-// Particle Constructor uses intializer list to set x and y coordinates to 0  
-Particle::Particle(): x(0), y(0) {
-
+// Particle Constructor uses intializer list to set x and y coordinates to 0
+Particle::Particle() : x(0), y(0) {
   // draw particle initial random location
   init();
 }
@@ -31,7 +30,6 @@ void Particle::init() {
 
 // update particle location with an interval calculation
 void Particle::update(int &interval) {
-  
   // set a curl affect on particle
   direction += interval * 0.0002;
 
@@ -43,13 +41,13 @@ void Particle::update(int &interval) {
   y += yspeed * interval;
 
   // dont allow particles to go off screen, instead redraw
-  // at new random location close to center of screen  
+  // at new random location close to center of screen
   if (x < -1 || x > 1 || y < -1 || y > 1) {
     init();
   }
 
-  // redraw 1 out of 100 particles randomly 
-  if(rand() < RAND_MAX / 100) {
+  // redraw 1 out of 100 particles randomly
+  if (rand() < RAND_MAX / 100) {
     init();
   }
 }
@@ -63,4 +61,4 @@ void Particle::setY(double x) { y = y; }
 
 double Particle::getY() { return y; }
 
-} // namespace lgh
+}  // namespace lgh

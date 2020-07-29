@@ -1,15 +1,14 @@
 #include "Input.h"
 
-
 namespace lgh {
 
 // Input class Implementation
 
 // Constructor
-Input::Input(){}
+Input::Input() {}
 
 // Destructor
-Input::~Input(){}
+Input::~Input() {}
 
 // process events returns false which causes program
 // loop to exit when window is closed by user
@@ -24,4 +23,4 @@ bool Input::processEvents() {
   return true;
 }
 
-}
+}  // namespace lgh

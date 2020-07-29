@@ -8,18 +8,14 @@
 #include "Simulator.h"
 
 int main() {
-
   // random seed generator for time
   std::srand(time(NULL));
 
   // create instance of simulator
   lgh::Simulator simulator;
 
-  // create instance of input
-  lgh::Input input;
-
   // run simulator and poll for input
-  simulator.run(input);
+  simulator.run();
 
   return 0;
 }
